@@ -1,0 +1,76 @@
+main {
+  width: 90%;
+  margin: 3rem auto 0px;
+  border: 1px solid black;
+  border-radius: 10px;
+  min-height: 100vh;
+}
+
+.toolbar {
+  height: 4rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.add-employees {
+  width: 20%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.search-input {
+  width: 300px;
+  background-color: transparent;
+  margin-right: 10px;
+  border-color: rgba(255, 255, 255, 0.5);
+  color: white;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.diachi {
+  width: 100%;
+  height: 100px;
+  border-radius: 5px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+th, td {
+  background-color: transparent;
+  color: #fff;
+}
+
+.listdata {
+  margin: 20px;
+}
+
+.container-fluid {
+  background: -webkit-gradient(linear, left top, right top, from(#B066FE), to(#63E2FF));
+  background: linear-gradient(to right, #B066FE, #63E2FF);
+}
+
+.error {
+  color: red;
+}
+/*# sourceMappingURL=home.component.css.map */

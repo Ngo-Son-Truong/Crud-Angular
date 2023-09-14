@@ -1,0 +1,129 @@
+<div class="container-fluid g-0">
+  <app-header></app-header>
+  <main>
+      <div class="toolbar">
+          <div class="add-employees">
+              <button class="btn btn-outline-success btn-lg" data-bs-toggle="modal"
+                  data-bs-target="#AddOrUpdate">Thêm Nhân Viên</button>
+          </div>
+          <div class="search-box">
+              <input type="text" class="form-control input" [(ngModel)]="searchString" (input)="search()" placeholder="Tìm kiếm...">
+
+          </div>
+      </div>
+      <div class="employees">
+          <div class="listdata mt-2">
+              <h1>Danh sách thông tin</h1>
+              <table class="table table-striped">
+                  <thead>
+                      <tr>
+                          <th scope="col">Họ tên</th>
+                          <th scope="col">Ảnh</th>
+                          <th scope="col">Ngày sinh</th>
+                          <th scope="col">Giới tính</th>
+                          <th scope="col">Số điện thoại</th>
+                          <th scope="col">Địa chỉ</th>
+                          <th scope="col">Hành động</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr *ngFor="let item of employees | paginate:{itemsPerPage:5,currentPage:page,totalItems:totalalllength}; let i = index">
+                          <td class="text-start align-middle">{{item.name}}</td>
+                          <td>
+                            <img [src]="item.image" alt="Employee Image" width="50px">
+                          </td>
+                          <td class="text-start align-middle">{{item.birthday}}</td>
+                          <td class="text-start align-middle">{{item.gender}}</td>
+                          <td class="text-start align-middle">{{item.phone}}</td>
+                          <td class="text-start align-middle">{{item.address}}</td>
+                          <td>
+                              <div>
+                                  <button class="btn btn-success" data-bs-toggle="modal"
+                                  data-bs-target="#AddOrUpdate" (click)="edit(item)"><i class="fa fa-edit"></i></button>
+                                  <span style="margin-left: 5px;"></span>
+                                  <button class="btn btn-warning" (click)="delete(item.id)"><i class="fa fa-trash"></i></button>
+                              </div>
+                          </td>
+                      </tr>
+                  </tbody>
+              </table>
+          </div>
+      </div>
+      <div class="pagination">
+        <pagination-controls (pageChange)="page=$event"></pagination-controls>
+      </div>       
+  </main>
+  <app-footer></app-footer>
+</div>
+<div class="modal fade" id="AddOrUpdate" tabindex="-1" aria-labelledby="AddOrUpdate" aria-hidden="true">
+  <div class="modal-dialog ">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title text-center" id="exampleModalLabel">Form Quản Lí Nhân Viên</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="resetform()"></button>
+          </div>
+          <div class="modal-body">
+            <form [formGroup]="myForm">
+              <div>
+                <label for="name">Name</label>
+                <input type="text" id="name" formControlName="name" [(ngModel)]="newemployees.name" class="form-control">
+                <div *ngIf="myForm.get('name')?.hasError('required') && myForm.get('name')?.touched" class="text-danger">
+                  Tên không được để trống!
+                </div>
+                <div *ngIf="myForm.get('name')?.hasError('whitespace')" class="text-danger">
+                  Name không thể chỉ chứa khoảng trống.
+                </div>
+              </div>
+            
+              <div>
+                <label for="birthday">Birthdate</label>
+                <input type="date" id="birthday" formControlName="birthday" [(ngModel)]="newemployees.birthday" class="form-control">
+                <div *ngIf="myForm.get('birthday')?.hasError('required') && myForm.get('birthday')?.touched" class="text-danger">
+                  Ngày sinh được để trống!
+                </div>
+              </div>
+            
+              <div>
+                <label for="gender">Gender</label>
+                <select id="gender" formControlName="gender" [(ngModel)]="newemployees.gender" class="form-control">
+                  <option value="" disabled>Select gender</option>
+                  <option value="Nam">Nam</option>
+                  <option value="Nữ">Nữ</option>
+                  <option value="Khác">Khác</option>
+                </select>
+                <div *ngIf="myForm.get('gender')?.hasError('required') && myForm.get('gender')?.touched" class="text-danger">
+                  Giới tính được để trống!
+                </div>
+              </div>
+            
+              <div>
+                <label for="phoneNumber">Phone Number</label>
+                <input type="text" id="phoneNumber" formControlName="phoneNumber" [(ngModel)]="newemployees.phone" class="form-control">
+                <div *ngIf="myForm.get('phoneNumber')?.hasError('required') && myForm.get('phoneNumber')?.touched" class="text-danger">
+                  Số điện thoại được để trống!
+                </div>
+                <div *ngIf="myForm.get('phoneNumber')?.hasError('pattern') && myForm.get('phoneNumber')?.touched" class="text-danger">
+                  Số điện thoại phải chứa 10số!
+                </div>
+              </div>
+            
+              <div>
+                <label for="address">Address</label>
+                <textarea id="address" formControlName="address" [(ngModel)]="newemployees.address" class="form-control"></textarea>
+                <div *ngIf="myForm.get('address')?.hasError('required') && myForm.get('address')?.touched" class="text-danger">
+                  Địa Chỉ được để trống!
+                </div>
+              </div>
+              <div>
+                <label for="address">Image</label>
+                <input type="file" id="image" (change)="onFileSelected($event)" class="form-control">
+              </div>         
+              <div class="text-center">
+                <button type="submit" class="btn btn-primary mt-2 mx-2" (click)="isEditing ? update(newemployees) : add()" [disabled]="!myForm.valid">Save</button>
+                <button type="button" class="btn btn-primary mt-2 mx-2" (click)="resetform()">Reset</button>
+              </div>
+            </form>
+          </div>
+      </div>
+  </div>
+</div>
